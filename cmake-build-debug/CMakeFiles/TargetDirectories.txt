@@ -1,0 +1,3 @@
+/Users/demi/Projects/GradePro/cmake-build-debug/CMakeFiles/GradePro.dir
+/Users/demi/Projects/GradePro/cmake-build-debug/CMakeFiles/edit_cache.dir
+/Users/demi/Projects/GradePro/cmake-build-debug/CMakeFiles/rebuild_cache.dir
