@@ -1,3 +1,11 @@
 /Users/demi/Projects/GradePro/cmake-build-debug/CMakeFiles/GradePro.dir
 /Users/demi/Projects/GradePro/cmake-build-debug/CMakeFiles/edit_cache.dir
 /Users/demi/Projects/GradePro/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/Users/demi/Projects/GradePro/cmake-build-debug/libs/CMakeFiles/IMGUI.dir
+/Users/demi/Projects/GradePro/cmake-build-debug/libs/CMakeFiles/edit_cache.dir
+/Users/demi/Projects/GradePro/cmake-build-debug/libs/CMakeFiles/rebuild_cache.dir
+/Users/demi/Projects/GradePro/cmake-build-debug/libs/SDL/CMakeFiles/SDL3-shared.dir
+/Users/demi/Projects/GradePro/cmake-build-debug/libs/SDL/CMakeFiles/SDL3_test.dir
+/Users/demi/Projects/GradePro/cmake-build-debug/libs/SDL/CMakeFiles/uninstall.dir
+/Users/demi/Projects/GradePro/cmake-build-debug/libs/SDL/CMakeFiles/edit_cache.dir
+/Users/demi/Projects/GradePro/cmake-build-debug/libs/SDL/CMakeFiles/rebuild_cache.dir

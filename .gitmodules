@@ -6,3 +6,7 @@
 	path = submodules/imgui
 	url = https://github.com/ocornut/imgui.git
 	branch = master
+[submodule "libs/libdxfrw"]
+	path = libs/libdxfrw
+	url = https://github.com/codelibs/libdxfrw.git
+	branch = master

@@ -332,13 +332,13 @@ PKG_CONFIG_ARGN:STRING=
 PKG_CONFIG_EXECUTABLE:FILEPATH=/opt/homebrew/bin/pkg-config
 
 //Value Computed by CMake
-SDL3_BINARY_DIR:STATIC=/Users/demi/Projects/GradePro/cmake-build-debug/SDL
+SDL3_BINARY_DIR:STATIC=/Users/demi/Projects/GradePro/cmake-build-debug/libs/SDL
 
 //Value Computed by CMake
 SDL3_IS_TOP_LEVEL:STATIC=OFF
 
 //Value Computed by CMake
-SDL3_SOURCE_DIR:STATIC=/Users/demi/Projects/GradePro/SDL
+SDL3_SOURCE_DIR:STATIC=/Users/demi/Projects/GradePro/libs/SDL
 
 //Support the ALSA audio API
 SDL_ALSA:BOOL=OFF
@@ -703,7 +703,7 @@ CMAKE_MODULE_LINKER_FLAGS_RELWITHDEBINFO-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_NM
 CMAKE_NM-ADVANCED:INTERNAL=1
 //number of local generators
-CMAKE_NUMBER_OF_MAKEFILES:INTERNAL=2
+CMAKE_NUMBER_OF_MAKEFILES:INTERNAL=3
 //ADVANCED property for variable: CMAKE_OBJCOPY
 CMAKE_OBJCOPY-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_OBJC_COMPILER

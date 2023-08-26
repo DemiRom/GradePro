@@ -3,6 +3,21 @@ project(GradePro)
 
 set(CMAKE_CXX_STANDARD 17)
 
+add_subdirectory(libs)
 
+include_directories(libs/imgui)
+include_directories(libs/SDL/src)
 
-add_executable(GradePro main.cpp)
+#=================== EXAMPLE ===================
+if(BUILD_EXAMPLES)
+    add_executable(example_sdl3_opengl3)
+    target_sources(example_sdl3_opengl3 PUBLIC ${CMAKE_SOURCE_DIR}/libs/imgui/examples/example_sdl3_opengl3/main.cpp)
+    target_link_libraries(example_sdl3_opengl3 IMGUI)
+    set_target_properties(example_sdl3_opengl3 PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
+endif()
+
+set(SRCS src/main.cpp)
+
+add_executable(GradePro ${SRCS})
+target_link_libraries(GradePro IMGUI)
+set_target_properties(GradePro PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})

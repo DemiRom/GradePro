@@ -8,7 +8,7 @@
 -- Platform: Darwin-22.2.0
 -- 64-bit:   TRUE
 -- Compiler: /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc
--- Revision: SDL-prerelease-3.0.0-2362-g3b1d1e4e3
+-- Revision: SDL-3.0.0-no-vcs
 -- Vendor:   
 -- 
 -- Subsystems:
@@ -128,15 +128,6 @@
 -- were installed, then make sure you have set the
 -- CMAKE_C_FLAGS and CMAKE_PREFIX_PATH CMake variables correctly.
 -- 
--- Configuring done (0.2s)
-CMake Error at CMakeLists.txt:21 (add_library):
-  Cannot find source file:
-
-    /Users/demi/Projects/GradePro/ImGui/imgui_demo.cpp
-
-
-CMake Error at CMakeLists.txt:21 (add_library):
-  No SOURCES given to target: IMGUI
-
-
-CMake Generate step failed.  Build files cannot be regenerated correctly.
+-- Configuring done (0.1s)
+-- Generating done (0.0s)
+-- Build files have been written to: /Users/demi/Projects/GradePro/cmake-build-debug
