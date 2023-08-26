@@ -1,9 +1,9 @@
-[submodule "submodules/SDL"]
-	path = submodules/SDL
+[submodule "libs/SDL"]
+	path = libs/SDL
 	url = https://github.com/libsdl-org/SDL.git
 	branch = main
-[submodule "submodules/imgui"]
-	path = submodules/imgui
+[submodule "libs/imgui"]
+	path = libs/imgui
 	url = https://github.com/ocornut/imgui.git
 	branch = master
 [submodule "libs/libdxfrw"]

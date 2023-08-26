@@ -1,3 +1,8 @@
+#=================== libdxfrw ===================
+
+set(LIBDXFRW_DIR ${CMAKE_CURRENT_SOURCE_DIR}/libdxfrw)
+add_subdirectory(${LIBDXFRW_DIR})
+
 #=================== SDL3 ===================
 
 if(RASPBIAN AND RPI_HAS_NEON)

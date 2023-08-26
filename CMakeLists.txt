@@ -7,6 +7,7 @@ add_subdirectory(libs)
 
 include_directories(libs/imgui)
 include_directories(libs/SDL/src)
+include_directories(libs/libdxfrw/src)
 
 #=================== EXAMPLE ===================
 if(BUILD_EXAMPLES)
@@ -16,8 +17,10 @@ if(BUILD_EXAMPLES)
     set_target_properties(example_sdl3_opengl3 PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
 endif()
 
-set(SRCS src/main.cpp)
+set(SRCS src/main.cpp
+        src/DxfWindow.cpp
+        src/DxfWindow.h)
 
 add_executable(GradePro ${SRCS})
-target_link_libraries(GradePro IMGUI)
+target_link_libraries(GradePro IMGUI dxfrw)
 set_target_properties(GradePro PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
