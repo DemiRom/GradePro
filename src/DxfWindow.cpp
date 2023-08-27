@@ -44,6 +44,8 @@ void DxfWindow::Render() {
 
 //    ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 0, 0);
 
+
+
     if (this->dxfInterface != nullptr) {
         ImVec2 p = ImGui::GetCursorScreenPos();
         auto windowDrawList = ImGui::GetWindowDrawList();
@@ -64,6 +66,10 @@ void DxfWindow::Render() {
                      (g_s << 16) |
                      (b_s << 8) |
                      0x000000ff;
+
+
+        std::cout << this->dxfInterface->getWidth() << std::endl;
+        std::cout << this->dxfInterface->getHeight() << std::endl;
 
         for (const auto &line: data->lines) {
             windowDrawList->AddLine(ImVec2(
@@ -163,3 +169,18 @@ void DxfWindow::LoadDxf(const std::string &filename) {
 
     delete dxf;
 }
+
+void DxfWindow::HandleEvent(SDL_Event &e) {
+    if(e.type == SDL_EVENT_MOUSE_WHEEL) {
+//        std::cout << e.wheel.x << " y " << e.wheel.y << std::endl;
+        this->scale += e.wheel.y;
+    }
+
+    if(e.type == SDL_EVENT_MOUSE_MOTION) {
+        if(e.button.button == SDL_BUTTON_MIDDLE) {
+            this->scrollOffset.x = e.motion.x;
+            this->scrollOffset.y = e.motion.y;
+        }
+    }
+}
+

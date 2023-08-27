@@ -5,6 +5,7 @@
 #include <string>
 #include "imgui.h"
 #include "DxfInterface.h"
+#include "SDL.h"
 
 class DxfWindow {
 public:
@@ -12,6 +13,8 @@ public:
     ~DxfWindow();
 
     void Render();
+
+    void HandleEvent(SDL_Event& e);
 
     void LoadDxf(const std::string& filename);
 
