@@ -109,6 +109,8 @@ int main(int, char**)
         ImGui_ImplSDL3_NewFrame();
         ImGui::NewFrame();
 
+        ImGui::SetNextWindowPos(ImVec2(0,0));
+        ImGui::SetNextWindowSize(io.DisplaySize);
         //DxfRender window
         {
             dxfWindow->Render();

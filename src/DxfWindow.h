@@ -4,7 +4,7 @@
 
 #include <string>
 #include "imgui.h"
-//#include "DxfIFace.h"
+#include "DxfInterface.h"
 
 class DxfWindow {
 public:
@@ -18,13 +18,16 @@ public:
 protected:
 private:
     std::string title;
+    bool opened = true;
     float f = 0.0f;
     int counter = 0;
+    float scale = 100.f;
+    float scrollOffset = 0.f;
 
     ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
 
-//    DxfIFace dxfIface;
-//    dx_data* data;
+    DxfInterface* dxfInterface {};
+
 };
 
 

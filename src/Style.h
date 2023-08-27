@@ -6,13 +6,13 @@
 void SetStyle() {
     ImGuiIO &io = ImGui::GetIO();
 
-    io.Fonts->Clear();
+//    io.Fonts->Clear();
 //    io.Fonts->AddFontFromFileTTF(ofToDataPath("fonts/OpenSans-Light.ttf", true).c_str(), 16);
 //    io.Fonts->AddFontFromFileTTF(ofToDataPath("fonts/OpenSans-Regular.ttf", true).c_str(), 16);
 //    io.Fonts->AddFontFromFileTTF(ofToDataPath("fonts/OpenSans-Light.ttf", true).c_str(), 32);
 //    io.Fonts->AddFontFromFileTTF(ofToDataPath("fonts/OpenSans-Regular.ttf", true).c_str(), 11);
 //    io.Fonts->AddFontFromFileTTF(ofToDataPath("fonts/OpenSans-Bold.ttf", true).c_str(), 11);
-    io.Fonts->Build();
+//    io.Fonts->Build();
 
     ImGuiStyle *style = &ImGui::GetStyle();
 

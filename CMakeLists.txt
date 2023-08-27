@@ -20,14 +20,15 @@ endif()
 set(SRCS src/main.cpp
         src/DxfWindow.cpp
         src/DxfWindow.h
-#        src/DxfIFace.cpp
-#        src/DxfIFace.h
-#        src/dx_data.h
         src/FileDialog.cpp
         src/FileDialog.h
         src/FileDialogConfig.h
-        src/Style.h)
+        src/Style.h
+        src/DxfInterface.cpp
+        src/DxfInterface.h
+        src/DxfData.cpp
+        src/DxfData.h)
 
 add_executable(GradePro ${SRCS})
-target_link_libraries(GradePro IMGUI dxfrw)
+target_link_libraries(GradePro IMGUI Dxflib::Dxflib)
 set_target_properties(GradePro PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})

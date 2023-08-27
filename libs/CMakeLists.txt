@@ -1,7 +1,7 @@
 #=================== libdxfrw ===================
 
-set(LIBDXFRW_DIR ${CMAKE_CURRENT_SOURCE_DIR}/libdxfrw)
-add_subdirectory(${LIBDXFRW_DIR})
+set(LIBDXF ${CMAKE_CURRENT_SOURCE_DIR}/dxflib)
+add_subdirectory(${LIBDXF})
 
 #=================== SDL3 ===================
 
