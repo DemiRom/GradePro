@@ -89,7 +89,11 @@ void DxfWindow::Render() {
                                           0xffffffff);
         }
 
+        int i = 0;
+
         for (const auto &polyline: data->polylines) {
+
+            std::cout << ++i << " : " << polyline.flags << std::endl;
 
         }
 
