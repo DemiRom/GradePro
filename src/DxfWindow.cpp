@@ -137,7 +137,7 @@ void DxfWindow::Render() {
         }
 
     }
-
+//TODO Set the style to change background colors
     ImGui::EndChild();
 
 //    ImGui::GetStyle().Colors[ImGuiCol_WindowBg] = ImVec4(0.92f, 0.91f, 0.88f, 0.70f);
