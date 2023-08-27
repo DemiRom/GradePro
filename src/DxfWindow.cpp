@@ -1,10 +1,11 @@
 #include "DxfWindow.h"
 
 #include <utility>
+#include <iostream>
 #include "imgui.h"
+#include "FileDialog.h"
 
-DxfWindow::DxfWindow(std::string title) : title (std::move(title)) {
-
+DxfWindow::DxfWindow(std::string title) : title(std::move(title)) {
 }
 
 DxfWindow::~DxfWindow() = default;
@@ -12,29 +13,70 @@ DxfWindow::~DxfWindow() = default;
 void DxfWindow::Render() {
     ImGui::Begin(this->title.c_str());
 
-//    ImGui::Text("This is some useful text.");               // Display some text (you can use a format strings too)
-//            ImGui::Checkbox("Demo Window", &show_demo_window);      // Edit bools storing our window open/close state
-//    ImGui::Checkbox("Another Window", &thisshow_another_window);
+    if(ImGui::BeginMenuBar()) {
 
-//    ImGui::SliderFloat("float", &f, 0.0f, 1.0f);            // Edit 1 float using a slider from 0.0f to 1.0f
-//    ImGui::ColorEdit3("clear color", (float*)&this->clear_color); // Edit 3 floats representing a color
-//
-//    if (ImGui::Button("Button"))                            // Buttons return true when clicked (most widgets return true when edited/activated)
-//        counter++;
-//
+        ImGui::EndMenuBar();
+    }
+
+    ImGui::SameLine();
+
+    if (ImGui::Button("Open CAD File"))
+        ImGuiFileDialog::Instance()->OpenDialog("ChooseFileDlgKey", "Choose File", ".dxf,.dwg", ".");
+    ImGui::SameLine();
+
+    if (ImGui::Button("+"))
+        std::cout << "Zoom in" << std::endl;
+    ImGui::SameLine();
+
+    if (ImGui::Button("-"))
+        std::cout << "Zoom out" << std::endl;
+
+    ImGui::Separator();
+    ImGui::BeginChild("WindowContents");
+
 //    ImGui::SameLine();
 //    ImGui::Text("counter = %d", counter);
 
-//    ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / io.Framerate, io.Framerate);
-    ImVec2 p = ImGui::GetCursorScreenPos();
+    ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 0, 0);
 
-    for(int i = 0; i < 20; i++)
-        ImGui::GetWindowDrawList()->AddLine(ImVec2(p.x + 50, p.y+50), ImVec2(i*50 + 1000, i* 50 + 2000), 0xFF0000FF, 1.0f);
+//    if (this->data != nullptr) {
+//        ImVec2 p = ImGui::GetCursorScreenPos();
+//        auto windowDrawList = ImGui::GetWindowDrawList();
 
+//        for (const auto &layer: this->data->layers) {
+//            windowDrawList->AddLine(ImVec2(p.x + 50, p.y + 50), ImVec2(1000, 2000), layer.color,
+//                                                layer.lWeight);
+//        }
+//        for(const auto& lineType : this->data->lineTypes) {
+//            windowDrawList->AddLine(ImVec2(p.x + lineType.path[0]))
+//        }
+//        this->data->lineTypes.back()->
+//    }
+
+//    for(int i = 0; i < 20; i++)
+
+    ImGui::EndChild();
+
+    /**
+     * Open File Dialog Rendering
+     */
+    if (ImGuiFileDialog::Instance()->Display("ChooseFileDlgKey"))
+    {
+        // action if OK
+        if (ImGuiFileDialog::Instance()->IsOk())
+        {
+            std::string filePathName = ImGuiFileDialog::Instance()->GetFilePathName();
+            std::string filePath = ImGuiFileDialog::Instance()->GetCurrentPath();
+            LoadDxf(filePathName);
+        }
+
+        // close
+        ImGuiFileDialog::Instance()->Close();
+    }
 
     ImGui::End();
 }
 
 void DxfWindow::LoadDxf(const std::string &filename) {
-
+//    dxfIface.fileImport(filename, this->data);
 }

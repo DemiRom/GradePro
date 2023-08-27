@@ -5,6 +5,7 @@
 #include "backends/imgui_impl_opengl3.h"
 #include "DxfWindow.h"
 #include <SDL3/SDL.h>
+#include "Style.h"
 
 #if defined(IMGUI_IMPL_OPENGL_ES2)
 #include <SDL3/SDL_opengles2.h>
@@ -86,6 +87,10 @@ int main(int, char**)
 
     auto* dxfWindow = new DxfWindow("DxfWindow");
     ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
+
+    ImGui::GetStyle().TouchExtraPadding = ImVec2(4.f, 4.f);
+
+    SetStyle();
 
     while (!done)
     {

@@ -4,6 +4,7 @@
 
 #include <string>
 #include "imgui.h"
+//#include "DxfIFace.h"
 
 class DxfWindow {
 public:
@@ -21,6 +22,9 @@ private:
     int counter = 0;
 
     ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
+
+//    DxfIFace dxfIface;
+//    dx_data* data;
 };
 
 

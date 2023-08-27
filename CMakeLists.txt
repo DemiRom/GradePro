@@ -19,7 +19,14 @@ endif()
 
 set(SRCS src/main.cpp
         src/DxfWindow.cpp
-        src/DxfWindow.h)
+        src/DxfWindow.h
+#        src/DxfIFace.cpp
+#        src/DxfIFace.h
+#        src/dx_data.h
+        src/FileDialog.cpp
+        src/FileDialog.h
+        src/FileDialogConfig.h
+        src/Style.h)
 
 add_executable(GradePro ${SRCS})
 target_link_libraries(GradePro IMGUI dxfrw)
