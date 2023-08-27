@@ -15,9 +15,12 @@ DxfWindow::~DxfWindow() {
 };
 
 void DxfWindow::Render() {
+//    ImGui::GetStyle().Colors[ImGuiCol_WindowBg] = ImVec4(0.f, 0.f, 0.f, 1.f);
+
     ImGui::Begin(this->title.c_str(), &opened,
                  ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize |
                  ImGuiWindowFlags_AlwaysAutoResize);
+
 
     if (ImGui::BeginMenuBar()) {
 
@@ -40,9 +43,12 @@ void DxfWindow::Render() {
     ImGui::Text("Zoom: %f", this->scale);
 
     ImGui::Separator();
+
+
     ImGui::BeginChild("WindowContents");
 
 //    ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 0, 0);
+
 
     if (this->dxfInterface != nullptr) {
         ImVec2 p = ImGui::GetCursorScreenPos();
@@ -134,6 +140,8 @@ void DxfWindow::Render() {
 
     ImGui::EndChild();
 
+//    ImGui::GetStyle().Colors[ImGuiCol_WindowBg] = ImVec4(0.92f, 0.91f, 0.88f, 0.70f);
+
     /**
      * Open File Dialog Rendering
      */
@@ -148,6 +156,8 @@ void DxfWindow::Render() {
         // close
         ImGuiFileDialog::Instance()->Close();
     }
+
+
 
     ImGui::End();
 }
