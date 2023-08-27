@@ -6,8 +6,14 @@
 
 class DxfPolyline {
 public:
+    explicit DxfPolyline(DL_PolylineData data) : polyline(data) {};
+
+
+    void addVertex(const DL_VertexData& vertexData);
+
+
     DL_PolylineData polyline;
-    std::vector<DL_VertexData> vertecies;
+    std::vector<DL_VertexData> vertices;
 };
 
 

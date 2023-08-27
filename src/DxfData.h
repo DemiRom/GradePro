@@ -3,6 +3,7 @@
 
 #include <vector>
 #include "dl_entities.h"
+#include "DxfPolyline.h"
 
 class DxfData {
 public:
@@ -11,8 +12,8 @@ public:
     std::vector<DL_LineData> lines;
     std::vector<DL_ArcData> arcs;
     std::vector<DL_CircleData> circles;
-    std::vector<DL_PolylineData> polylines;
     std::vector<DL_VertexData> vertex;
+    std::vector<DxfPolyline> polylines;
     std::vector<DL_3dFaceData> threedfaces;
 };
 

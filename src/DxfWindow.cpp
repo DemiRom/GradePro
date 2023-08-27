@@ -67,11 +67,11 @@ void DxfWindow::Render() {
 
         for (const auto &line: data->lines) {
             windowDrawList->AddLine(ImVec2(
-                                            (((float) line.x1 * scale) + (scrollOffset + p.x)),
-                                            (((float) line.y1 * scale) + (scrollOffset + p.y))),
+                                            (((float) line.x1 * scale) + (scrollOffset.x + p.x)),
+                                            (((float) line.y1 * scale) + (scrollOffset.y + p.y))),
                                     ImVec2(
-                                            (((float) line.x2 * scale) + (scrollOffset + p.x)),
-                                            (((float) line.y2 * scale) + (scrollOffset + p.y))),
+                                            (((float) line.x2 * scale) + (scrollOffset.x + p.x)),
+                                            (((float) line.y2 * scale) + (scrollOffset.y + p.y))),
                                     0xFF0000FF,
                                     1.f);
         }
@@ -80,28 +80,53 @@ void DxfWindow::Render() {
             if (vertex.z != 0)
                 continue;
 
-            windowDrawList->AddRectFilled(ImVec2(
-                                                  (((float) vertex.x * scale) + (scrollOffset + p.x)) - 4,
-                                                  (((float) vertex.y * scale) + (scrollOffset + p.y)) - 4),
+            windowDrawList->AddRect(ImVec2(
+                                                  (((float) vertex.x * scale) + (scrollOffset.x + p.x)) - 1,
+                                                  (((float) vertex.y * scale) + (scrollOffset.y + p.y)) - 1),
                                           ImVec2(
-                                                  (((float) vertex.x * scale) + (scrollOffset + p.x)) + 4,
-                                                  (((float) vertex.y * scale) + (scrollOffset + p.y)) + 4),
+                                                  (((float) vertex.x * scale) + (scrollOffset.x + p.x)) + 1,
+                                                  (((float) vertex.y * scale) + (scrollOffset.y + p.y)) + 1),
                                           0xffffffff);
         }
 
-        int i = 0;
+        for (const auto &point : data->points) {
+            if(point.z != 0)
+                continue;
 
-        for (const auto &polyline: data->polylines) {
-
-            std::cout << ++i << " : " << polyline.flags << std::endl;
+            //TODO Add a radius
+            windowDrawList->AddCircle(ImVec2(point.x * scale + scrollOffset.x, point.y * scale + scrollOffset.y), 2,
+                                      0x0000ffff);
 
         }
 
+        for (const auto &polyline: data->polylines) {
+
+            assert(polyline.polyline.number == polyline.vertices.size());
+
+            for(int i = 0; i <= polyline.polyline.number; i++) {
+                if(i + 1 >= polyline.polyline.number)
+                    break;
+
+                auto v_a = polyline.vertices.at(i);
+                auto v_b = polyline.vertices.at(i + 1);
+
+                windowDrawList->AddLine(ImVec2(
+                                                (((float) v_a.x * scale) + (scrollOffset.x + p.x)),
+                                                (((float) v_a.y * scale) + (scrollOffset.y + p.y))),
+                                        ImVec2(
+                                                (((float) v_b.x * scale) + (scrollOffset.x + p.x)),
+                                                (((float) v_b.y * scale) + (scrollOffset.y + p.y))),
+                                        0xaa0000ff,
+                                        1.0f);
+            }
+        }
+
+        //TODO This is not an arc
         for (const auto &arc: data->arcs) {
             if (arc.cz != 0)
                 continue;
 
-            windowDrawList->AddCircle(ImVec2(arc.cx * scale + scrollOffset, arc.cy * scale + scrollOffset), arc.radius,
+            windowDrawList->AddCircle(ImVec2(arc.cx * scale + scrollOffset.x, arc.cy * scale + scrollOffset.y), arc.radius,
                                       0xffffffff);
         }
 

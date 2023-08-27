@@ -17,6 +17,7 @@ void DxfInterface::addLayer(const DL_LayerData &data) {
 
 void DxfInterface::addPoint(const DL_PointData &data) {
     this->dxfData->points.push_back(data);
+
 #ifdef DXF_INTERFACE_DEBUG
     printf("Adding Point\n");
 
@@ -56,7 +57,7 @@ void DxfInterface::addCircle(const DL_CircleData &data) {
 }
 
 void DxfInterface::addPolyline(const DL_PolylineData &data) {
-    this->dxfData->polylines.push_back(data);
+    this->dxfData->polylines.emplace_back(data);
 #ifdef DXF_INTERFACE_DEBUG
     printf("Adding Polyline\n");
 
@@ -67,6 +68,9 @@ void DxfInterface::addPolyline(const DL_PolylineData &data) {
 
 void DxfInterface::addVertex(const DL_VertexData &data) {
     this->dxfData->vertex.push_back(data);
+
+    this->dxfData->polylines.back().addVertex(data);
+
 #ifdef DXF_INTERFACE_DEBUG
     printf("Adding Vertex\n");
 

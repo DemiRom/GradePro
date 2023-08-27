@@ -1,5 +1,5 @@
-//
-// Created by Demi on 2023-08-27.
-//
-
 #include "DxfPolyline.h"
+
+void DxfPolyline::addVertex(const DL_VertexData &vertexData) {
+    this->vertices.push_back(vertexData);
+}
