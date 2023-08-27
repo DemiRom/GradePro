@@ -30,11 +30,11 @@ void DxfWindow::Render() {
 
     ImGui::SameLine();
     if (ImGui::Button("+"))
-        this->scale++;
+        this->scale += 5;
 
     ImGui::SameLine();
     if (ImGui::Button("-"))
-        this->scale--;
+        this->scale -= 5;
 
     ImGui::SameLine();
     ImGui::Text("Zoom: %f", this->scale);
@@ -87,6 +87,18 @@ void DxfWindow::Render() {
                                                   (((float) vertex.x * scale) + (scrollOffset + p.x)) + 4,
                                                   (((float) vertex.y * scale) + (scrollOffset + p.y)) + 4),
                                           0xffffffff);
+        }
+
+        for (const auto &polyline: data->polylines) {
+
+        }
+
+        for (const auto &arc: data->arcs) {
+            if (arc.cz != 0)
+                continue;
+
+            windowDrawList->AddCircle(ImVec2(arc.cx * scale + scrollOffset, arc.cy * scale + scrollOffset), arc.radius,
+                                      0xffffffff);
         }
 
     }

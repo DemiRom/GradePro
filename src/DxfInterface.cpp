@@ -1,5 +1,7 @@
 #include "DxfInterface.h"
 
+//#define DXF_INTERFACE_DEBUG
+
 DxfInterface::DxfInterface() {
     dxfData = new DxfData();
 };
