@@ -42,6 +42,36 @@ void DxfWindow::Render() {
     ImGui::SameLine();
     ImGui::Text("Zoom: %f", this->scale);
 
+    /**
+     * Visual Toolbar Buttons
+     */
+    ImGui::Separator();
+
+    if (ImGui::Button(this->showVertices ? "Hide Vertices" : "Show Vertices"))
+        this->showVertices = !this->showVertices;
+
+    ImGui::SameLine();
+    if (ImGui::Button(this->showPolylines ? "Hide Polylines" : "Show Polylines"))
+        this->showPolylines = !this->showPolylines;
+
+    ImGui::SameLine();
+    if (ImGui::Button(this->showLines ? "Hide Lines" : "Show Lines"))
+        this->showLines = !this->showLines;
+
+    ImGui::SameLine();
+    if (ImGui::Button(this->showPoints ? "Hide Points" : "Show Points"))
+        this->showPoints = !this->showPoints;
+
+    ImGui::SameLine();
+    if (ImGui::Button(this->showArcs ? "Hide Arcs" : "Show Arcs"))
+        this->showArcs = !this->showArcs;
+
+    ImGui::Separator();
+
+    /**
+     * Grade Manipulation Buttons
+     */
+
     ImGui::Separator();
 
 
@@ -71,71 +101,81 @@ void DxfWindow::Render() {
                      (b_s << 8) |
                      0x000000ff;
 
-        for (const auto &line: data->lines) {
-            windowDrawList->AddLine(ImVec2(
-                                            (((float) line.x1 * scale) + (scrollOffset.x + p.x)),
-                                            (((float) line.y1 * scale) + (scrollOffset.y + p.y))),
-                                    ImVec2(
-                                            (((float) line.x2 * scale) + (scrollOffset.x + p.x)),
-                                            (((float) line.y2 * scale) + (scrollOffset.y + p.y))),
-                                    0xFF0000FF,
-                                    1.f);
-        }
-
-        for (const auto &vertex: data->vertex) {
-            if (vertex.z != 0)
-                continue;
-
-            windowDrawList->AddRect(ImVec2(
-                                                  (((float) vertex.x * scale) + (scrollOffset.x + p.x)) - 1,
-                                                  (((float) vertex.y * scale) + (scrollOffset.y + p.y)) - 1),
-                                          ImVec2(
-                                                  (((float) vertex.x * scale) + (scrollOffset.x + p.x)) + 1,
-                                                  (((float) vertex.y * scale) + (scrollOffset.y + p.y)) + 1),
-                                          0xffffffff);
-        }
-
-        for (const auto &point : data->points) {
-            if(point.z != 0)
-                continue;
-
-            //TODO Add a radius
-            windowDrawList->AddCircle(ImVec2(point.x * scale + scrollOffset.x, point.y * scale + scrollOffset.y), 2,
-                                      0x0000ffff);
-
-        }
-
-        for (const auto &polyline: data->polylines) {
-
-            assert(polyline.polyline.number == polyline.vertices.size());
-
-            for(int i = 0; i <= polyline.polyline.number; i++) {
-                if(i + 1 >= polyline.polyline.number)
-                    break;
-
-                auto v_a = polyline.vertices.at(i);
-                auto v_b = polyline.vertices.at(i + 1);
-
+        if (this->showLines) {
+            for (const auto &line: data->lines) {
                 windowDrawList->AddLine(ImVec2(
-                                                (((float) v_a.x * scale) + (scrollOffset.x + p.x)),
-                                                (((float) v_a.y * scale) + (scrollOffset.y + p.y))),
+                                                (((float) line.x1 * scale) + (scrollOffset.x + p.x)),
+                                                (((float) line.y1 * scale) + (scrollOffset.y + p.y))),
                                         ImVec2(
-                                                (((float) v_b.x * scale) + (scrollOffset.x + p.x)),
-                                                (((float) v_b.y * scale) + (scrollOffset.y + p.y))),
-                                        0xaa0000ff,
-                                        1.0f);
+                                                (((float) line.x2 * scale) + (scrollOffset.x + p.x)),
+                                                (((float) line.y2 * scale) + (scrollOffset.y + p.y))),
+                                        0xFF0000FF,
+                                        1.f);
             }
         }
 
-        //TODO This is not an arc
-        for (const auto &arc: data->arcs) {
-            if (arc.cz != 0)
-                continue;
+        if (this->showPoints) {
+            for (const auto &point: data->points) {
+                if (point.z != 0)
+                    continue;
 
-            windowDrawList->AddCircle(ImVec2(arc.cx * scale + scrollOffset.x, arc.cy * scale + scrollOffset.y), arc.radius,
-                                      0xffffffff);
+                //TODO Add a radius
+                windowDrawList->AddCircle(ImVec2((float)point.x * scale + scrollOffset.x, (float)point.y * scale + scrollOffset.y), 2,
+                                          0x0000ffff);
+
+            }
         }
 
+        if (this->showVertices) {
+            for (const auto &vertex: data->vertex) {
+                if (vertex.z != 0) {
+                    continue;
+                }
+
+                windowDrawList->AddRect(ImVec2(
+                                                (((float) vertex.x * scale) + (scrollOffset.x + p.x)) - 1,
+                                                (((float) vertex.y * scale) + (scrollOffset.y + p.y)) - 1),
+                                        ImVec2(
+                                                (((float) vertex.x * scale) + (scrollOffset.x + p.x)) + 1,
+                                                (((float) vertex.y * scale) + (scrollOffset.y + p.y)) + 1),
+                                        0xffffffff);
+            }
+        }
+
+        if (this->showPolylines) {
+            for (const auto &polyline: data->polylines) {
+
+                assert(polyline.polyline.number == polyline.vertices.size());
+
+                for (int i = 0; i <= polyline.polyline.number; i++) {
+                    if (i + 1 >= polyline.polyline.number)
+                        break;
+
+                    auto v_a = polyline.vertices.at(i);
+                    auto v_b = polyline.vertices.at(i + 1);
+
+                    windowDrawList->AddLine(ImVec2(
+                                                    (((float) v_a.x * scale) + (scrollOffset.x + p.x)),
+                                                    (((float) v_a.y * scale) + (scrollOffset.y + p.y))),
+                                            ImVec2(
+                                                    (((float) v_b.x * scale) + (scrollOffset.x + p.x)),
+                                                    (((float) v_b.y * scale) + (scrollOffset.y + p.y))),
+                                            0xaa0000ff,
+                                            1.0f);
+                }
+            }
+        }
+
+        if (this->showArcs) {//TODO This is not an arc
+            for (const auto &arc: data->arcs) {
+                if (arc.cz != 0)
+                    continue;
+
+                windowDrawList->AddCircle(ImVec2((float)arc.cx * scale + scrollOffset.x, (float)arc.cy * scale + scrollOffset.y),
+                                          (float)arc.radius,
+                                          0xffffffff);
+            }
+        }
     }
 
     ImGui::EndChild();
