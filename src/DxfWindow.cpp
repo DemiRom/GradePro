@@ -78,33 +78,37 @@ void DxfWindow::Render() {
         for (const auto &line: data->lines) {
             windowDrawList->AddLine(ImVec2(
                                             (((float) line.x1 * scale) + (scrollOffset.x + p.x)),
-                                            (((float) line.y1 * scale) + (scrollOffset.y + p.y))),
+                                            (((float) -line.y1 * scale) + (scrollOffset.y + p.y))),
                                     ImVec2(
                                             (((float) line.x2 * scale) + (scrollOffset.x + p.x)),
-                                            (((float) line.y2 * scale) + (scrollOffset.y + p.y))),
+                                            (((float) -line.y2 * scale) + (scrollOffset.y + p.y))),
                                     0xFF0000FF,
                                     1.f);
         }
 
-        for (const auto &vertex: data->vertex) {
+        for (const auto &vertex: data->vertices) {
+//        for(size_t i = data->vertices.size(); i == 0; i--) {
+//            auto vertices = data->vertices[i];
             if (vertex.z != 0)
                 continue;
 
             windowDrawList->AddRect(ImVec2(
-                                                  (((float) vertex.x * scale) + (scrollOffset.x + p.x)) - 1,
-                                                  (((float) vertex.y * scale) + (scrollOffset.y + p.y)) - 1),
-                                          ImVec2(
-                                                  (((float) vertex.x * scale) + (scrollOffset.x + p.x)) + 1,
-                                                  (((float) vertex.y * scale) + (scrollOffset.y + p.y)) + 1),
-                                          0xffffffff);
+                                            (((float) vertex.x * scale) + (scrollOffset.x + p.x)) - 1,
+                                            (((float) -vertex.y * scale) + (scrollOffset.y + p.y)) - 1),
+                                    ImVec2(
+                                            (((float) vertex.x * scale) + (scrollOffset.x + p.x)) + 1,
+                                            (((float) -vertex.y * scale) + (scrollOffset.y + p.y)) + 1),
+                                    0xffffffff);
         }
 
-        for (const auto &point : data->points) {
-            if(point.z != 0)
+        for (const auto &point: data->points) {
+            if (point.z != 0)
                 continue;
 
             //TODO Add a radius
-            windowDrawList->AddCircle(ImVec2(point.x * scale + scrollOffset.x, point.y * scale + scrollOffset.y), 2,
+            windowDrawList->AddCircle(ImVec2(
+                                              (float) point.x * scale + scrollOffset.x,
+                                              (float) -point.y * scale + scrollOffset.y), 2,
                                       0x0000ffff);
 
         }
@@ -113,8 +117,8 @@ void DxfWindow::Render() {
 
             assert(polyline.polyline.number == polyline.vertices.size());
 
-            for(int i = 0; i <= polyline.polyline.number; i++) {
-                if(i + 1 >= polyline.polyline.number)
+            for (int i = 0; i <= polyline.polyline.number; i++) {
+                if (i + 1 >= polyline.polyline.number)
                     break;
 
                 auto v_a = polyline.vertices.at(i);
@@ -122,10 +126,10 @@ void DxfWindow::Render() {
 
                 windowDrawList->AddLine(ImVec2(
                                                 (((float) v_a.x * scale) + (scrollOffset.x + p.x)),
-                                                (((float) v_a.y * scale) + (scrollOffset.y + p.y))),
+                                                (((float) -v_a.y * scale) + (scrollOffset.y + p.y))),
                                         ImVec2(
                                                 (((float) v_b.x * scale) + (scrollOffset.x + p.x)),
-                                                (((float) v_b.y * scale) + (scrollOffset.y + p.y))),
+                                                (((float) -v_b.y * scale) + (scrollOffset.y + p.y))),
                                         0xaa0000ff,
                                         1.0f);
             }
@@ -136,12 +140,15 @@ void DxfWindow::Render() {
             if (arc.cz != 0)
                 continue;
 
-            windowDrawList->AddCircle(ImVec2(arc.cx * scale + scrollOffset.x, arc.cy * scale + scrollOffset.y), arc.radius,
+            windowDrawList->AddCircle(ImVec2(
+                                              (float) arc.cx * scale + scrollOffset.x,
+                                              (float) -arc.cy * scale + scrollOffset.y),
+                                      (float) arc.radius,
                                       0xffffffff);
         }
 
     }
-
+//TODO Set the style to change background colors
     ImGui::EndChild();
 
 //    ImGui::GetStyle().Colors[ImGuiCol_WindowBg] = ImVec4(0.92f, 0.91f, 0.88f, 0.70f);
@@ -160,7 +167,6 @@ void DxfWindow::Render() {
         // close
         ImGuiFileDialog::Instance()->Close();
     }
-
 
 
     ImGui::End();

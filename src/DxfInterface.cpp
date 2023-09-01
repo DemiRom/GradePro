@@ -67,7 +67,7 @@ void DxfInterface::addPolyline(const DL_PolylineData &data) {
 }
 
 void DxfInterface::addVertex(const DL_VertexData &data) {
-    this->dxfData->vertex.push_back(data);
+    this->dxfData->vertices.push_back(data);
 
     this->dxfData->polylines.back().addVertex(data);
 

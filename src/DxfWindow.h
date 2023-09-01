@@ -25,8 +25,8 @@ private:
     float f = 0.0f;
     int counter = 0;
     float scale = 100.f;
-    ImVec2 scrollOffset = {0.f, 0.f};
     ImVec2 scrollOffsetStartPosition = {0.f, 0.f};
+    ImVec2 scrollOffset = {0.f, 500.f};
 
     ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
 
