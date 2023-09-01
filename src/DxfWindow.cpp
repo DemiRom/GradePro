@@ -127,7 +127,7 @@ void DxfWindow::Render() {
         }
 
         if (this->showVertices) {
-            for (const auto &vertex: data->vertex) {
+            for (const auto &vertex: data->vertices) {
                 if (vertex.z != 0) {
                     continue;
                 }
