@@ -19,17 +19,19 @@ public:
     void addPolyline(const DL_PolylineData& data) final;
     void addVertex(const DL_VertexData& data) final;
     void add3dFace(const DL_3dFaceData& data) final;
-
     void addTrace(const DL_TraceData &data) final;
-
-
 
     void printAttributes();
 
     DxfData* getDxfData();
 
+    [[nodiscard]] double getWidth() const;
+    [[nodiscard]] double getHeight() const;
+
 private:
     DxfData* dxfData;
+
+    double width, height;
 };
 
 

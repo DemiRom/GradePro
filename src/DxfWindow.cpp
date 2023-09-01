@@ -71,6 +71,10 @@ void DxfWindow::Render() {
                      (b_s << 8) |
                      0x000000ff;
 
+
+//        std::cout << this->dxfInterface->getWidth() << std::endl;
+//        std::cout << this->dxfInterface->getHeight() << std::endl;
+
         for (const auto &line: data->lines) {
             windowDrawList->AddLine(ImVec2(
                                             (((float) line.x1 * scale) + (scrollOffset.x + p.x)),
@@ -173,3 +177,25 @@ void DxfWindow::LoadDxf(const std::string &filename) {
 
     delete dxf;
 }
+
+void DxfWindow::HandleEvent(SDL_Event &e) {
+    if(e.type == SDL_EVENT_MOUSE_WHEEL) {
+//        std::cout << e.wheel.x << " y " << e.wheel.y << std::endl;
+        this->scale += e.wheel.y;
+    }
+
+    if(e.type == SDL_EVENT_MOUSE_MOTION) {
+        if(e.button.button == SDL_BUTTON_MIDDLE) {
+            this->scrollOffset.x = (-(this->scrollOffsetStartPosition.x - e.motion.x) + this->scrollOffset.x) * (100.f / this->scale);
+            this->scrollOffset.y = (-(this->scrollOffsetStartPosition.y - e.motion.y) + this->scrollOffset.y) * (100.f / this->scale);
+        }
+    } else {
+        this->scrollOffsetStartPosition.x = e.motion.x;
+        this->scrollOffsetStartPosition.y = e.motion.y;
+    }
+
+    if(e.key.keysym.sym == SDL_KeyCode::SDLK_r) {
+        this->scrollOffset = {0.f, 0.f};
+    }
+}
+

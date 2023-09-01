@@ -102,6 +102,8 @@ int main(int, char**)
                 done = true;
             if (event.type == SDL_EVENT_WINDOW_CLOSE_REQUESTED && event.window.windowID == SDL_GetWindowID(window))
                 done = true;
+
+            dxfWindow->HandleEvent(event);
         }
 
         // Start the Dear ImGui frame

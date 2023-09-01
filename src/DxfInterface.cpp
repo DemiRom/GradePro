@@ -71,6 +71,9 @@ void DxfInterface::addVertex(const DL_VertexData &data) {
 
     this->dxfData->polylines.back().addVertex(data);
 
+    this->width = this->width < data.x ? data.x : this->width;
+    this->height = this->height < data.y ? data.y : this->height;
+
 #ifdef DXF_INTERFACE_DEBUG
     printf("Adding Vertex\n");
 
@@ -118,4 +121,12 @@ DxfData *DxfInterface::getDxfData() {
 
 void DxfInterface::addTrace(const DL_TraceData &data) {
 
+}
+
+double DxfInterface::getHeight() const {
+    return this->height;
+}
+
+double DxfInterface::getWidth() const {
+    return this->width;
 }

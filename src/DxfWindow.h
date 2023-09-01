@@ -5,6 +5,7 @@
 #include <string>
 #include "imgui.h"
 #include "DxfInterface.h"
+#include "SDL.h"
 
 class DxfWindow {
 public:
@@ -12,6 +13,8 @@ public:
     ~DxfWindow();
 
     void Render();
+
+    void HandleEvent(SDL_Event& e);
 
     void LoadDxf(const std::string& filename);
 
@@ -23,6 +26,7 @@ private:
     int counter = 0;
     float scale = 100.f;
     ImVec2 scrollOffset = {0.f, 0.f};
+    ImVec2 scrollOffsetStartPosition = {0.f, 0.f};
 
     ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
 
