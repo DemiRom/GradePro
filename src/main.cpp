@@ -6,6 +6,7 @@
 #include "DxfWindow.h"
 #include <SDL3/SDL.h>
 #include "Style.h"
+#include "LaserWindow.h"
 
 #if defined(IMGUI_IMPL_OPENGL_ES2)
 #include <SDL3/SDL_opengles2.h>
@@ -86,11 +87,15 @@ int main(int, char**)
     bool done = false;
 
     auto* dxfWindow = new DxfWindow("DxfWindow");
+    auto* laserWindow = new LaserWindow("LaserWindow");
+
+
     ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
 
     ImGui::GetStyle().TouchExtraPadding = ImVec2(4.f, 4.f);
 
-    SetStyle();
+    //TODO Move this to a class
+//    SetStyle();
 
     while (!done)
     {
@@ -102,6 +107,9 @@ int main(int, char**)
                 done = true;
             if (event.type == SDL_EVENT_WINDOW_CLOSE_REQUESTED && event.window.windowID == SDL_GetWindowID(window))
                 done = true;
+
+            dxfWindow->HandleEvent(event);
+            laserWindow->HandleEvent(event);
         }
 
         // Start the Dear ImGui frame
@@ -109,11 +117,16 @@ int main(int, char**)
         ImGui_ImplSDL3_NewFrame();
         ImGui::NewFrame();
 
-        ImGui::SetNextWindowPos(ImVec2(0,0));
-        ImGui::SetNextWindowSize(io.DisplaySize);
+//        ImGui::SetNextWindowPos(ImVec2(0,0));
+//        ImGui::SetNextWindowSize(io.DisplaySize);
         //DxfRender window
         {
             dxfWindow->Render();
+        }
+
+        //Laser window
+        {
+            laserWindow->Render();
         }
 
         // Rendering
@@ -126,6 +139,7 @@ int main(int, char**)
     }
 
     delete dxfWindow;
+    delete laserWindow;
 
     // Cleanup
     ImGui_ImplOpenGL3_Shutdown();

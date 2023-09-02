@@ -7,9 +7,6 @@
 #include "dl_dxf.h"
 #include "dl_codes.h"
 
-DxfWindow::DxfWindow(std::string title) : title(std::move(title)) {
-}
-
 DxfWindow::~DxfWindow() {
     delete this->dxfInterface;
 };
@@ -172,4 +169,8 @@ void DxfWindow::LoadDxf(const std::string &filename) {
     }
 
     delete dxf;
+}
+
+void DxfWindow::HandleEvent(SDL_Event &e) {
+
 }

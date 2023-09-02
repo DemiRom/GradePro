@@ -3,22 +3,24 @@
 
 
 #include <string>
+#include <utility>
 #include "imgui.h"
 #include "DxfInterface.h"
+#include "AbstractWindow.h"
 
-class DxfWindow {
+class DxfWindow : public AbstractWindow {
 public:
-    DxfWindow(std::string title);
+    explicit DxfWindow(std::string title) : AbstractWindow(std::move(title)) {}
+
     ~DxfWindow();
 
-    void Render();
+    void Render() final;
+    void HandleEvent(SDL_Event& e) final;
 
     void LoadDxf(const std::string& filename);
 
 protected:
 private:
-    std::string title;
-    bool opened = true;
     float f = 0.0f;
     int counter = 0;
     float scale = 100.f;

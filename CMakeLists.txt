@@ -29,7 +29,11 @@ set(SRCS src/main.cpp
         src/DxfData.cpp
         src/DxfData.h
         src/DxfPolyline.cpp
-        src/DxfPolyline.h)
+        src/DxfPolyline.h
+        src/LaserWindow.cpp
+        src/LaserWindow.h
+        src/AbstractWindow.cpp
+        src/AbstractWindow.h)
 
 add_executable(GradePro ${SRCS})
 target_link_libraries(GradePro IMGUI Dxflib::Dxflib)
