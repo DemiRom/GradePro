@@ -117,6 +117,12 @@ int main(int, char**)
         {
             dxfWindow->Render();
         }
+        //Debug window TODO Move to own class
+        {
+            ImGui::Begin("Debug Window", nullptr, ImGuiWindowFlags_NoResize);
+            ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / io.Framerate, io.Framerate);
+            ImGui::End();
+        }
 
         // Rendering
         ImGui::Render();
