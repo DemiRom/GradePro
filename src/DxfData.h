@@ -12,7 +12,7 @@ public:
     std::vector<DL_LineData> lines;
     std::vector<DL_ArcData> arcs;
     std::vector<DL_CircleData> circles;
-    std::vector<DL_VertexData> vertex;
+    std::vector<DL_VertexData> vertices;
     std::vector<DxfPolyline> polylines;
     std::vector<DL_3dFaceData> threedfaces;
 };

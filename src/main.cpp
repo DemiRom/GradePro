@@ -102,6 +102,8 @@ int main(int, char**)
                 done = true;
             if (event.type == SDL_EVENT_WINDOW_CLOSE_REQUESTED && event.window.windowID == SDL_GetWindowID(window))
                 done = true;
+
+            dxfWindow->HandleEvent(event);
         }
 
         // Start the Dear ImGui frame
@@ -117,7 +119,7 @@ int main(int, char**)
         }
         //Debug window TODO Move to own class
         {
-            ImGui::Begin("Debug Window", nullptr, ImGuiWindowFlags_);
+            ImGui::Begin("Debug Window", nullptr, ImGuiWindowFlags_NoCollapse);
             ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / io.Framerate, io.Framerate);
             ImGui::End();
         }

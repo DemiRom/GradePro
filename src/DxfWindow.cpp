@@ -102,15 +102,15 @@ void DxfWindow::Render() {
                      0x000000ff;
 
         if (this->showLines) {
-            for (const auto &line: data->lines) {
-                windowDrawList->AddLine(ImVec2(
-                                                (((float) line.x1 * scale) + (scrollOffset.x + p.x)),
-                                                (((float) line.y1 * scale) + (scrollOffset.y + p.y))),
-                                        ImVec2(
-                                                (((float) line.x2 * scale) + (scrollOffset.x + p.x)),
-                                                (((float) line.y2 * scale) + (scrollOffset.y + p.y))),
-                                        0xFF0000FF,
-                                        1.f);
+        for (const auto &line: data->lines) {
+            windowDrawList->AddLine(ImVec2(
+                                            (((float) line.x1 * scale) + (scrollOffset.x + p.x)),
+                                            (((float) -line.y1 * scale) + (scrollOffset.y + p.y))),
+                                    ImVec2(
+                                            (((float) line.x2 * scale) + (scrollOffset.x + p.x)),
+                                            (((float) -line.y2 * scale) + (scrollOffset.y + p.y))),
+                                    0xFF0000FF,
+                                    1.f);
             }
         }
 
@@ -124,20 +124,21 @@ void DxfWindow::Render() {
                                           0x0000ffff);
 
             }
+
         }
 
         if (this->showVertices) {
-            for (const auto &vertex: data->vertex) {
+            for (const auto &vertex: data->vertices) {
                 if (vertex.z != 0) {
                     continue;
                 }
 
                 windowDrawList->AddRect(ImVec2(
                                                 (((float) vertex.x * scale) + (scrollOffset.x + p.x)) - 1,
-                                                (((float) vertex.y * scale) + (scrollOffset.y + p.y)) - 1),
+                                                (((float) -vertex.y * scale) + (scrollOffset.y + p.y)) - 1),
                                         ImVec2(
                                                 (((float) vertex.x * scale) + (scrollOffset.x + p.x)) + 1,
-                                                (((float) vertex.y * scale) + (scrollOffset.y + p.y)) + 1),
+                                                (((float) -vertex.y * scale) + (scrollOffset.y + p.y)) + 1),
                                         0xffffffff);
             }
         }
@@ -154,14 +155,14 @@ void DxfWindow::Render() {
                     auto v_a = polyline.vertices.at(i);
                     auto v_b = polyline.vertices.at(i + 1);
 
-                    windowDrawList->AddLine(ImVec2(
-                                                    (((float) v_a.x * scale) + (scrollOffset.x + p.x)),
-                                                    (((float) v_a.y * scale) + (scrollOffset.y + p.y))),
-                                            ImVec2(
-                                                    (((float) v_b.x * scale) + (scrollOffset.x + p.x)),
-                                                    (((float) v_b.y * scale) + (scrollOffset.y + p.y))),
-                                            0xaa0000ff,
-                                            1.0f);
+                windowDrawList->AddLine(ImVec2(
+                                                (((float) v_a.x * scale) + (scrollOffset.x + p.x)),
+                                                (((float) -v_a.y * scale) + (scrollOffset.y + p.y))),
+                                        ImVec2(
+                                                (((float) v_b.x * scale) + (scrollOffset.x + p.x)),
+                                                (((float) -v_b.y * scale) + (scrollOffset.y + p.y))),
+                                        0xaa0000ff,
+                                        1.0f);
                 }
             }
         }
@@ -171,13 +172,15 @@ void DxfWindow::Render() {
                 if (arc.cz != 0)
                     continue;
 
-                windowDrawList->AddCircle(ImVec2((float)arc.cx * scale + scrollOffset.x, (float)arc.cy * scale + scrollOffset.y),
-                                          (float)arc.radius,
-                                          0xffffffff);
+            windowDrawList->AddCircle(ImVec2(
+                                              (float) arc.cx * scale + scrollOffset.x,
+                                              (float) -arc.cy * scale + scrollOffset.y),
+                                      (float) arc.radius,
+                                      0xffffffff);
             }
         }
     }
-
+//TODO Set the style to change background colors
     ImGui::EndChild();
 
 //    ImGui::GetStyle().Colors[ImGuiCol_WindowBg] = ImVec4(0.92f, 0.91f, 0.88f, 0.70f);
@@ -198,7 +201,6 @@ void DxfWindow::Render() {
     }
 
 
-
     ImGui::End();
 }
 
@@ -213,3 +215,25 @@ void DxfWindow::LoadDxf(const std::string &filename) {
 
     delete dxf;
 }
+
+void DxfWindow::HandleEvent(SDL_Event &e) {
+    if(e.type == SDL_EVENT_MOUSE_WHEEL) {
+//        std::cout << e.wheel.x << " y " << e.wheel.y << std::endl;
+        this->scale += e.wheel.y;
+    }
+
+    if(e.type == SDL_EVENT_MOUSE_MOTION) {
+        if(e.button.button == SDL_BUTTON_MIDDLE) {
+            this->scrollOffset.x = (-(this->scrollOffsetStartPosition.x - e.motion.x) + this->scrollOffset.x) * (100.f / this->scale);
+            this->scrollOffset.y = (-(this->scrollOffsetStartPosition.y - e.motion.y) + this->scrollOffset.y) * (100.f / this->scale);
+        }
+    } else {
+        this->scrollOffsetStartPosition.x = e.motion.x;
+        this->scrollOffsetStartPosition.y = e.motion.y;
+    }
+
+    if(e.key.keysym.sym == SDL_KeyCode::SDLK_r) {
+        this->scrollOffset = {0.f, 0.f};
+    }
+}
+
